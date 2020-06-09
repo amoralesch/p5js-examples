@@ -1,0 +1,9 @@
+.dropzone {
+  padding: 20px;
+  font-size: 24pt;
+  border: 1ch dashed black;
+}
+
+.hover {
+  background-color: gray;
+}
