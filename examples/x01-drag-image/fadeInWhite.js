@@ -1,4 +1,4 @@
-class FadeIn {
+class FadeInWhite {
   original;
 
   img;
@@ -9,17 +9,24 @@ class FadeIn {
     this.original = theImage;
     this.original.loadPixels();
 
-    this.img = createImage(this.original.width, this.original.height);
+    this.newImage(this.original.width, this.original.height);
+  }
+
+  newImage(theWidth, theHeight) {
+    this.img = createImage(theWidth, theHeight);
     this.img.loadPixels();
   }
 
   updateImage() {
-    if (this.cycleCount > 255)
+    if (this.cycleCount > 255) {
       return;
+    }
 
-    for (var x = 0; x < this.original.width; x++) {
-      for (var y = 0; y < this.original.height; y++) {
-        this.writeColor(x, y);
+    this.cycleCount++;
+
+    for (var x = 0; x < this.original.pixels.length; x++) {
+      if (this.original.pixels[x] > this.img.pixels[x]) {
+        this.img.pixels[x]++;
       }
     }
 
@@ -48,7 +55,7 @@ class FadeIn {
 
   reset() {
     this.cycleCount = 0;
-    this.img = createImage(this.original.width, this.original.height);
-    this.img.loadPixels();
+
+    this.newImage(this.original.width, this.original.height);
   }
 }

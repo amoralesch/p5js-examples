@@ -1,4 +1,15 @@
 var effect;
+var effectType = 'FadeInWhite';
+var cacheImage;
+
+var classes = {
+  'FadeInWhite': FadeInWhite,
+  'FadeInBlack': FadeInBlack,
+  'FadeInRGB': FadeInRGB,
+  'FadeOut': FadeOut,
+  'PixelByPixel': PixelByPixel,
+  'LineByLine': LineByLine
+}
 
 function setup() {
   var p = createP("Drop an image here");
@@ -8,8 +19,22 @@ function setup() {
   p.dragLeave(resetClass);
   p.drop(gotFile, resetClass);
 
-  var canvas = createCanvas(600, 400);
+  var s = createSelect();
+  s.option('Select an effect');
+  s.disable('Select an effect');
+  s.option('Fade In from White', 'FadeInWhite');
+  s.option('Fade In from Black', 'FadeInBlack');
+  s.option('Fade In RGB', 'FadeInRGB');
+  s.option('Fade Out', 'FadeOut');
+  s.option('Pixel by Pixel', 'PixelByPixel');
+  s.option('Line by Line', 'LineByLine');
+  s.changed(changeEffect)
+
+  createElement('br');
+
+  var canvas = createCanvas(1200, 800);
   canvas.style('border', '1px solid black');
+  canvas.mousePressed(resetImage);
 }
 
 function draw() {
@@ -35,10 +60,19 @@ function gotFile(file) {
 }
 
 function imageLoaded(theImage) {
-  effect = new FadeIn(theImage);
+  cacheImage = theImage;
+  effect = new classes[effectType](cacheImage);
 }
 
-function mousePressed() {
+function changeEffect() {
+  effectType = this.value();
+
+  if (cacheImage) {
+    imageLoaded(cacheImage);
+  }
+}
+
+function resetImage() {
   if (effect) {
     effect.reset();
   }
