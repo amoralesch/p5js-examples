@@ -1,0 +1,38 @@
+{
+  "name": "p5js-intro",
+  "version": "1.0.0-SNAPSHOT",
+  "description": "Repo with examples created while learning P5.js.",
+  "main": "index.js",
+  "directories": {
+    "example": "examples",
+    "lib": "lib"
+  },
+  "dependencies": {
+    "chai": "^4.2.0"
+  },
+  "devDependencies": {
+    "mocha": "^8.0.1",
+    "p5": "^1.0.0"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/amoralesch/p5js-examples.git"
+  },
+  "keywords": [
+    "p5js",
+    "example",
+    "demo",
+    "unit-test",
+    "mocha",
+    "chai"
+  ],
+  "author": "amoralesch@hotmail.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/amoralesch/p5js-examples/issues"
+  },
+  "homepage": "https://github.com/amoralesch/p5js-examples#readme"
+}

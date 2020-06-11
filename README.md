@@ -5,10 +5,8 @@ This project has the examples and code used to learn
 
 ## How to install
 
-0. Download the repo / code;
-0. Download `p5.js` file from [official page](https://p5js.org/download/);
-0. Store the file inside a folder called `lib`, make sure the file is
+1. Download the repo / code;
+2. Download `p5.js` file from [official page](https://p5js.org/download/);
+3. Store the file inside a folder called `lib`, make sure the file is
    named `p5-v1.0.0.min.js`;
-0. Install [`mocha`](https://mochajs.org/) (`npm install -g mocha`);
-0. Install [`chai`](https://www.chaijs.com/)
-   (`npm install --save-dev chai`);
+4. Other dependencies are stores in `package.json` file.
