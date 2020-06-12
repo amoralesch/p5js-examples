@@ -53,13 +53,23 @@ class Particle {
   }
 
   drawHistory = function() {
+    let previousPoint;
+
     for (var i = 0; i < this.previousPoints.length; i++) {
       let alpha = map(i, 0, this.previousPoints.length, 0, this.maxAlphaTail);
       let radio = map(i, 0, this.previousPoints.length, 0, this.sizeTail);
       let point = this.previousPoints[i];
 
+      noStroke();
       fill(150, alpha);
       circle(point.x, point.y, radio);
+
+      if (previousPoint) {
+        stroke(0, alpha);
+        line(previousPoint.x, previousPoint.y, point.x, point.y);
+      }
+
+      previousPoint = point;
     }
   }
 }
