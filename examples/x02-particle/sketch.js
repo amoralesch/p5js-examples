@@ -1,6 +1,8 @@
 var position;
 var previousPoints = [];
 
+var size = 50
+var step = 5;
 var limit = 1000;
 
 function setup() {
@@ -9,11 +11,11 @@ function setup() {
 }
 
 function draw() {
-  background(0);
+  background(255);
   updateHistory(previousPoints, position, limit);
-  position = newPosition(position);
-  drawPrincipal(position);
-  drawHistory(previousPoints);
+  position = newPosition(position, step);
+  drawHistory(previousPoints, size / 2);
+  drawPrincipal(position, size);
 }
 
 function updateHistory(previous, current, limit) {
@@ -26,9 +28,9 @@ function updateHistory(previous, current, limit) {
   }
 }
 
-function newPosition(previous) {
-  let x = previous.x + round(random(-5, 5));
-  let y = previous.y + round(random(-5, 5));
+function newPosition(previous, step) {
+  let x = previous.x + round(random(-step, step));
+  let y = previous.y + round(random(-step, step));
 
   if (x > width) {
     x = 0;
@@ -45,15 +47,17 @@ function newPosition(previous) {
   return createVector(x, y);
 }
 
-function drawPrincipal(pos) {
+function drawPrincipal(pos, size) {
   noStroke();
-  fill(150);
-  circle(pos.x, pos.y, 50);
+  fill(100);
+  circle(pos.x, pos.y, size);
 }
 
-function drawHistory(previous) {
-  fill(255);
+function drawHistory(previous, max) {
   for (var i = 0; i < previous.length; i++) {
-    circle(previous[i].x, previous[i].y, 5);
+    let d = map(i, 0, previous.length, 0, 100);
+
+    fill(150, d);
+    circle(previous[i].x, previous[i].y, map(i, 0, previous.length, 0, max));
   }
 }
