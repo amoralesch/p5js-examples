@@ -1,5 +1,9 @@
 class Particle {
+  wiggle = true;
+
   step = 15;
+
+  wiggleStep = this.step / 5;
 
   maxAlphaTail = 100;
 
@@ -28,14 +32,23 @@ class Particle {
       this.previousPoints.shift();
     }
 
-    this.x = this.getNewValue(this.x, maxX);
-    this.y = this.getNewValue(this.y, maxY);
+    if (this.wiggle) {
+      for (var i = 0; i < this.previousPoints.length; i++) {
+        let point = this.previousPoints[i];
+
+        point.x = this.getNewValue(this.wiggleStep, point.x, maxX);
+        point.y = this.getNewValue(this.wiggleStep, point.y, maxY);
+      }
+    }
+
+    this.x = this.getNewValue(this.step, this.x, maxX);
+    this.y = this.getNewValue(this.step, this.y, maxY);
 
     return { x: this.x, y: this.y };
   }
 
-  getNewValue = function(current, max) {
-    current += getRndInteger(-this.step, this.step);
+  getNewValue = function(step, current, max) {
+    current += getRndInteger(-step, step);
 
     if (current > max) {
       current = 0;

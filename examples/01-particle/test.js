@@ -66,7 +66,8 @@ describe('Particle tests', function() {
     done();
   });
 
-  it('should store previous position when it moves', function(done) {
+  it('should store previous position when it moves with wiggle OFF', function(done) {
+    particle.wiggle = false;
     particle.move(100, 100);
 
     expect(particle.previousPoints.length).to.be.equal(1);
@@ -75,24 +76,48 @@ describe('Particle tests', function() {
     done();
   });
 
-  it('should delete first element when history is full', function(done) {
-    particle.limitHistory = 3;
-    particle.move(100, 100);
-    let point2 = particle.move(100, 100);
-    let point3 = particle.move(100, 100);
-    let point4 = particle.move(100, 100);
+  it('should wiggle previous position when it moves with wiggle ON', function(done) {
+    particle.wiggle = true;
     particle.move(100, 100);
 
-    expect(particle.previousPoints.length).to.be.equal(3);
-
-    expect(particle.previousPoints[0].x).to.be.equal(point2.x);
-    expect(particle.previousPoints[0].y).to.be.equal(point2.y);
-
-    expect(particle.previousPoints[1].x).to.be.equal(point3.x);
-    expect(particle.previousPoints[1].y).to.be.equal(point3.y);
-
-    expect(particle.previousPoints[2].x).to.be.equal(point4.x);
-    expect(particle.previousPoints[2].y).to.be.equal(point4.y);
+    expect(particle.previousPoints.length).to.be.equal(1);
+    expect(closeEnough(
+      particle.previousPoints[0],
+      { x : x, y : y },
+      particle.wiggleStep)).to.be.true;
     done();
   });
+
+  it('should delete first element when history is full', function(done) {
+    particle.limitHistory = 3;
+    let tooOld = particle.move(100, 100);
+    let point1 = particle.move(100, 100);
+    let point2 = particle.move(100, 100);
+    let point3 = particle.move(100, 100);
+    let last = particle.move(100, 100);
+
+    expect(particle.previousPoints.length).to.be.equal(3);
+    expect(
+      closeEnough(particle.previousPoints[0], point1, particle.wiggleStep))
+      .to.be.true;
+    expect(
+      closeEnough(particle.previousPoints[1], point2, particle.wiggleStep))
+      .to.be.true;
+    expect(
+      closeEnough(particle.previousPoints[2], point3, particle.wiggleStep))
+      .to.be.true;
+    done();
+  });
+
+  function closeEnough(pointA, pointB, separation) {
+    if (Math.abs(pointA.x - pointB.x) > separation) {
+      return false;
+    }
+
+    if (Math.abs(pointA.y - pointB.y) > separation) {
+      return false;
+    }
+
+    return true;
+  }
 });
