@@ -13,7 +13,7 @@ function setup() {
   cols = width / vScale;
   rows = height / vScale;
 
-  snake = new Snake(round(cols / 2), round(rows / 2));
+  newSnake();
   newFruit();
 }
 
@@ -53,6 +53,10 @@ function newFruit() {
   fruit = createVector(floor(random(cols)), floor(random(rows)));
 }
 
+function newSnake() {
+  snake = new Snake(round(cols / 2), round(rows / 2));
+}
+
 function drawFruit() {
   fill(255, 0, 0);
   circle((fruit.x * vScale) + (vScale / 2), (fruit.y * vScale) + (vScale / 2), vScale);
@@ -76,6 +80,6 @@ function drawScore() {
 
 function reset() {
   score = 0;
-  snake = new Snake(round(cols / 2), round(rows / 2));
+  newSnake();
   newFruit();
 }
